@@ -67,11 +67,15 @@ export const deleteUser = (id : number) => {
 
 }
 
-export const updateUser = (id :  number, name:string , fullName:string, isMarried :string,country:string, gender:string ) => {
+export const updateUser = (id :  number, name:string , fullName:string, isMarried :boolean,country:string, gender:string ) => {
    const user = users.find(user => user.id === id);
    if(user){
     user.name = name;
     user.fullName = fullName;
+    user.country = country;
+    user.isMarried = isMarried;
+    user.gender = gender;
+    
    }
 }
 

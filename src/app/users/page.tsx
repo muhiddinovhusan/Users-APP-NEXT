@@ -3,41 +3,56 @@ import React, { useEffect, useState } from 'react'
 import { GET } from '../api/users/route'
 import AddUser from '@/components/AddUser';
 import { DELETE } from '../api/users/[id]/route';
+import EditUser from '@/components/EditUser';
 
 const page = () => {
   const [modal, setModal] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [data, setData] = useState<any[]>([]);
+const [editModal , setEditModal] = useState(false)
+const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await GET();
-        const data = await response.json();
-        console.log(data)
-        setUsers(data.users);
-      } catch (error) {
-        console.error('', error);
-      }
-    };
-
-    fetchData();
+      fetchData();
   }, []);
-  console.log(users)
 
-
-  const handleDelete = async (id) => {
-    try {
-      const response = await DELETE(id);
-      if (response.status === 200) {
-        console.log('User deleted successfully');
-        
-      } else {
-        console.error('Failed to delete user:', response.error);
+  const fetchData = async () => {
+      try {
+          const res = await fetch('http://localhost:3000/api/users');
+          if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+          const jsonData = await res.json();
+          setData(jsonData.users);
+      } catch (error) {
+          console.error('Error fetching data:', error);
       }
+  };
+
+  const handleEdit = (userId: number) => {
+    const selectedUser = data.find(user => user.id === userId);
+    setSelectedStudent(selectedUser);
+    setEditModal(true);
+    console.log(selectedUser)
+  };
+
+
+  const handleDelete = async (userId: number) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+      alert('User deleted')
+      fetchData();
+      console.log(`User with ID ${userId} has been deleted successfully.`);
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error(`Error deleting user with ID ${userId}:`, error);
     }
   };
+
+  
 
 
 
@@ -48,6 +63,9 @@ const page = () => {
   };
   const closeModal = () => {
     setModal(false);
+  };
+  const closeEditModal = () => {
+    setEditModal(false);
   };
   return (
     <div className='container py-3'>
@@ -82,7 +100,7 @@ const page = () => {
         </thead>
         <tbody>
           {
-            users.map((user: {
+          data && data.length>0 &&   data.map((user: {
               id: number;
               name: string;
               fullName: string;
@@ -100,7 +118,7 @@ const page = () => {
                 <td>{user.isMarried ? "true" : "false"}</td>
                 <td className='flex gap-2'>
                   <button className='btn btn-danger' onClick={()=> handleDelete(user.id)}>Delete</button>
-                  <button className='btn btn-warning'>Edit</button>
+                  <button className='btn btn-warning' onClick={()=>handleEdit(user.id)}>Edit</button>
                 </td>
               </tr>
             ))
@@ -108,6 +126,7 @@ const page = () => {
         </tbody>
       </table>
       <AddUser modal={modal} closeModal={closeModal}  />
+      <EditUser editModal={editModal} closeEditModal={closeEditModal} selectedUser= {selectedStudent}  />
 
 
     </div>
