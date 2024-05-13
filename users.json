@@ -2,16 +2,33 @@
   {
     "id": 1,
     "name": "Husan",
-    "fullName": "Muhiddinov"
+    "fullName": "Muhiddinov",
+    "country": "Tashkent",
+    "isMarried": true,
+    "gender": "Male"
   },
   {
     "id": 2,
     "name": "Hasan",
-    "fullName": "Muhiddinov"
+    "fullName": "Muhiddinov",
+    "country": "Tashkent",
+    "isMarried": true,
+    "gender": "Male"
   },
   {
     "name": "Xusan",
     "fullName": "Muhiddinov",
-    "id": 3
+    "id": 3,
+    "country": "Tashkent",
+    "isMarried": true,
+    "gender": "Male"
+  },
+  {
+    "name": "Husan",
+    "fullName": "Muhiddinov",
+    "country": "Tashkent",
+    "gender": "Male",
+    "isMarried": "on",
+    "id": 4
   }
 ]

@@ -1,4 +1,4 @@
-// import fs from 'fs';
+import fs from 'fs';
 
 interface Users {
     id: number
@@ -32,22 +32,22 @@ export let users: Users[] = [
 ] ;
 
 
-// const fileName = 'users.json';
+const fileName = 'users.json';
 
-// const saveDataToFile = () => {
-//     fs.writeFileSync(fileName, JSON.stringify(users, null, 2));
-// };
+const saveDataToFile = () => {
+    fs.writeFileSync(fileName, JSON.stringify(users, null, 2));
+};
 
-// const loadDataFromFile = () => {
-//     try {
-//         const data = fs.readFileSync(fileName, 'utf-8');
-//         users = JSON.parse(data);
-//     } catch (error) {
-//         console.error('Error loading data from file:', error);
-//     }
-// };
+const loadDataFromFile = () => {
+    try {
+        const data = fs.readFileSync(fileName, 'utf-8');
+        users = JSON.parse(data);
+    } catch (error) {
+        console.error('Error loading data from file:', error);
+    }
+};
 
-// loadDataFromFile();
+loadDataFromFile();
 
 
 
@@ -59,7 +59,7 @@ export const getUser = () => users;
 
 export const addUser = (user :Users) => {
     users.push(user);
-//  saveDataToFile();
+ saveDataToFile();
 }
 
 export const deleteUser = (id : number) => {

@@ -113,7 +113,6 @@ const [selectedStudent, setSelectedStudent] = useState(null);
                 <td>{user.name}</td>
                 <td>{user.fullName}</td>
                 <td>{user.gender}</td>
-                <td></td>
                 <td>{user.country}</td>
                 <td>{user.isMarried ? "true" : "false"}</td>
                 <td className='flex gap-2'>
